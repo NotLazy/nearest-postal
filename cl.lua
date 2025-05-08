@@ -20,3 +20,4 @@ nearest = nil
 pBlip = nil
 
 exports('getPostal', function() return nearest and nearest.code or nil end)
+exports('setDirections', function(postal) SetRouteToPostal(postal) end)

@@ -8,11 +8,8 @@ local format = string.format
 --- [[ Nearest Postal Commands ]] ---
 ---
 
-TriggerEvent('chat:addSuggestion', '/postal', 'Set the GPS to a specific postal',
-             { { name = 'Postal Code', help = 'The postal code you would like to go to' } })
-
-RegisterCommand('postal', function(_, args)
-    if #args < 1 then
+function SetRouteToPostal(postal)
+    if not postal then
         if pBlip then
             RemoveBlip(pBlip.hndl)
             pBlip = nil
@@ -27,7 +24,7 @@ RegisterCommand('postal', function(_, args)
         return
     end
 
-    local userPostal = upper(args[1])
+    local userPostal = upper(postal)
     local foundPostal
 
     for _, p in ipairs(postals) do
@@ -65,5 +62,12 @@ RegisterCommand('postal', function(_, args)
             }
         })
     end
+end
+
+TriggerEvent('chat:addSuggestion', '/postal', 'Set the GPS to a specific postal',
+             { { name = 'Postal Code', help = 'The postal code you would like to go to' } })
+
+RegisterCommand('postal', function(_, args)
+    SetRouteToPostal(args[1])
 end)
 
